@@ -38,7 +38,7 @@ function Get-RobloxGameInfo {
         $iconImageUrl = $iconResponse.data[0].imageUrl
         
         return @{
-            Name = $gameName
+            Name    = $gameName
             IconUrl = $iconImageUrl
             PlaceId = $GameId
         }
@@ -91,9 +91,19 @@ if (-not $gameInfo) {
 }
 
 Write-Host "Game found: $($gameInfo.Name)" -ForegroundColor Green
+Write-Host ""
+
+# Ask for custom shortcut name
+$customName = Read-Host "Custom shortcut name? (Leave blank to use game name)"
+if ([string]::IsNullOrWhiteSpace($customName)) {
+    $safeName = $gameInfo.Name
+}
+else {
+    $safeName = $customName
+}
 
 # Remove invalid characters and emojis
-$safeName = $gameInfo.Name -replace '[\\/:*?"<>|]', '_'
+$safeName = $safeName -replace '[\\/:*?"<>|]', '_'
 $safeName = $safeName -replace '[^\x00-\x7F]', ''
 $safeName = $safeName -replace '\s+', ' ' -replace '_+', '_' -replace '^\s+|\s+$', '' # Trim spaces and underscores
 
@@ -102,6 +112,17 @@ if ([string]::IsNullOrWhiteSpace($safeName)) {
 }
 
 $shortcutPath = Join-Path $OutputPath "$safeName.lnk"
+
+# Check for duplicate shortcut
+if (Test-Path $shortcutPath) {
+    Write-Warning "Shortcut already exists at: $shortcutPath"
+    $overwrite = Read-Host "Do you want to overwrite it? (Y/N) [Default: N]"
+    if ($overwrite -ne "Y" -and $overwrite -ne "y") {
+        Write-Host "Operation cancelled." -ForegroundColor Yellow
+        exit 0
+    }
+    Write-Host "Overwriting existing shortcut..." -ForegroundColor Yellow
+}
 $iconPath = Join-Path $env:TEMP "$safeName.ico"
 
 # Download and convert icon from png to ico
