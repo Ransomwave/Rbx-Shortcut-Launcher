@@ -4,7 +4,7 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
 
 ![Screenshot 1](./assets/screenshot1.png)
 
-## ✨ Features
+## Features
 
 - **Single or Batch Creation** - Create one shortcut or multiple at once
 - **Custom Shortcut Names** - Rename shortcuts to your preference
@@ -17,9 +17,9 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
 
 ### Creating Shortcuts
 
-1. [Download the repository](https://github.com/Ransomwave/Rbx-Shortcut-Launcher/archive/refs/heads/main.zip) or clone it using:
+1. [Download the repository](https://github.com/Paryx-games/roblox-shortcuts/releases/download/v1.1.0/roblox-shortcuts.zip) or clone it using:
    ```
-   git clone https://github.com/Ransomwave/Rbx-Shortcut-Launcher.git
+   git clone https://github.com/Paryx-games/roblox-shortcuts.git
    ```
 2. Run the `CreateShortcut.bat` file
 3. Choose single or batch mode:
