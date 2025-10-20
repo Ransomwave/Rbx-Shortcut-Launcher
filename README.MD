@@ -2,6 +2,8 @@
 
 Simple script that creates desktop shortcuts for Roblox games, as if they were real apps installed on your PC. It automatically fetches the **game's name** and **icon** for you!
 
+![Screenshot 1](./assets/screenshot1.png)
+
 ## How to use
 
 1. [Download the repository](https://github.com/Ransomwave/Rbx-Shortcut-Launcher/archive/refs/heads/main.zip) or clone it using:
