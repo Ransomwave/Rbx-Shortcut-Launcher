@@ -67,7 +67,7 @@ function Get-RobloxGameInfo {
 }
 
 # Function to create a single shortcut
-function Create-RobloxShortcut {
+function New-RobloxShortcut {
     param(
         [string]$GameId,
         [string]$OutputPath,
@@ -243,7 +243,7 @@ foreach ($gameId in $validGameIds) {
         $privateServer = Read-Host "Private server link code? (Leave blank for public server)"
     }
     
-    $result = Create-RobloxShortcut -GameId $gameId -OutputPath $OutputPath -CustomName $customName -PrivateServerCode $privateServer
+    $result = New-RobloxShortcut -GameId $gameId -OutputPath $OutputPath -CustomName $customName -PrivateServerCode $privateServer
     
     if ($result) {
         $successCount++
