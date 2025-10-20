@@ -135,8 +135,20 @@ function Update-RobloxShortcut {
     
     # Update icon
     if ($UpdateIcon) {
-        $safeName = $gameInfo.Name -replace '[\\/:*?"<>|]', '_'
-        $safeName = $safeName -replace '[^\x00-\x7F]', ''
+        # Sanitize filename: Remove emojis, brackets, and invalid characters
+        # Step 1: Remove non-ASCII characters (emojis)
+        $safeName = $gameInfo.Name -replace '[^\x00-\x7F]', ''
+        
+        # Step 2: Remove empty brackets [] that result from emoji removal
+        $safeName = $safeName -replace '\[\s*\]', ''
+        
+        # Step 3: Remove leading brackets with content (e.g., [FALL], [UPDATE])
+        $safeName = $safeName -replace '^\s*\[[^\]]*\]\s*', ''
+        
+        # Step 4: Remove invalid filename characters
+        $safeName = $safeName -replace '[\\/:*?"<>|]', '_'
+        
+        # Step 5: Clean up multiple spaces/underscores and trim
         $safeName = $safeName -replace '\s+', ' ' -replace '_+', '_' -replace '^\s+|\s+$', ''
         
         if ([string]::IsNullOrWhiteSpace($safeName)) {
