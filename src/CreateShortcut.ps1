@@ -6,12 +6,13 @@
 
 # Function to get game information from Roblox API
 function Get-RobloxGameInfo {
-    param([string]$GameId)
+    param([string]$GameId) # PascalCase for parameter names lol
     
     try {
-        $headers = @{
-            'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
+        # $headers = @{
+        #     'User-Agent' = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        # }
+        # Headers aren't necessarily needed, but you can uncomment if you're having any trouble with requests.
         
         # The ID from the URL is the Place ID, use it directly
         # Get place details which will give us the universe ID
@@ -76,7 +77,7 @@ Write-Host ""
 
 # Validate Game ID
 if (-not ($GameId -match '^\d+$')) {
-    Write-Error "Invalid Game ID. Please enter a numeric value."
+    Write-Error "Invalid Game ID. Please enter a numeric value. (Make sure it's the game ID, not the URL!)"
     exit 1
 }
 
@@ -108,12 +109,11 @@ $iconPath = Join-Path $env:TEMP "$safeName.ico"
 Write-Host "Downloading game icon..." -ForegroundColor Yellow
 $iconSuccess = Convert-ImageToIcon -ImageUrl $gameInfo.IconUrl -OutputPath $iconPath
 
-# Create shortcut
+
+# Create Shortcut and set properties
 Write-Host "Creating shortcut..." -ForegroundColor Yellow
 $WshShell = New-Object -ComObject WScript.Shell # Create COM object
 $Shortcut = $WshShell.CreateShortcut($shortcutPath) # Use that same COM object to create the shortcut
-
-# Set shortcut properties
 $Shortcut.TargetPath = "roblox://placeId=$($gameInfo.PlaceId)"
 $Shortcut.Description = "Launch $($gameInfo.Name) on Roblox"
 $Shortcut.WorkingDirectory = $OutputPath
@@ -124,7 +124,7 @@ if ($iconSuccess -and (Test-Path $iconPath)) {
     Write-Host "Icon applied successfully" -ForegroundColor Green
 }
 else {
-    Write-Warning "Could not apply custom icon. Using default icon."
+    Write-Warning "Could not apply custom icon! Using default Windows icon."
 }
 
 # Save shortcut
@@ -134,8 +134,8 @@ Write-Host ""
 Write-Host "[SUCCESS] Shortcut created successfully!" -ForegroundColor Green
 Write-Host "Location: $shortcutPath" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "Note: The icon file is saved at: $iconPath" -ForegroundColor Gray
-Write-Host "      Keep this file to maintain the custom icon." -ForegroundColor Gray
+Write-Host "Note: The icon file is saved at: $iconPath"
+Write-Host "      Keep this file to maintain the custom icon." -ForegroundColor Yellow
 
 # Cleanup shortcut creation COM object to avoid memory leaks
 [System.Runtime.Interopservices.Marshal]::ReleaseComObject($WshShell) | Out-Null
