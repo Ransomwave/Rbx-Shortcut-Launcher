@@ -234,7 +234,7 @@ $failCount = 0
 foreach ($gameId in $validGameIds) {
     Write-Host "--- Processing Game ID: $gameId ---" -ForegroundColor Magenta
     
-    # Ask for custom name and private server (only in single mode)
+    # Ask for custom name and private server
     $customName = ""
     $privateServer = ""
     
