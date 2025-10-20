@@ -6,12 +6,12 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
 
 ## ✨ Features
 
-- 🎮 **Single or Batch Creation** - Create one shortcut or multiple at once
-- 🎨 **Custom Shortcut Names** - Rename shortcuts to your preference
-- 🔒 **Private Server Support** - Add private server link codes to shortcuts
-- 🔄 **Auto-Retry Logic** - Automatically retries API calls if they fail
-- 🔍 **Duplicate Detection** - Warns you if a shortcut already exists
-- 📦 **Shortcut Updater** - Update existing shortcuts with latest game info and icons
+- **Single or Batch Creation** - Create one shortcut or multiple at once
+- **Custom Shortcut Names** - Rename shortcuts to your preference
+- **Private Server Support** - Add private server link codes to shortcuts
+- **Auto-Retry Logic** - Automatically retries API calls if they fail
+- **Duplicate Detection** - Warns you if a shortcut already exists
+- **Shortcut Updater** - Update existing shortcuts with latest game info and icons
 
 ## How to use
 
@@ -45,4 +45,4 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
 
 ## Contributions
 
-Feel free to fork the repository and submit pull requests for improvements or bug fixes.
+Forked from https://github.com/Ransomwave/Rbx-Shortcut-Launcher, props to Ransomwave for the original work.
