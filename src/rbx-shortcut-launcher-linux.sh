@@ -78,7 +78,6 @@ download_game() {
 
 get_game_info() {
   echo "Getting game information..."
-  # -o - make sure it writes to stdout, so it can be captured by our response var
   local resp=$(curl "https://apis.roblox.com/universes/v1/places/${gameID}/universe")
   universeID=$(echo "$resp" | jq -r ".universeId") # jq used here to get one specific JSON variable
 
