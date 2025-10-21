@@ -10,15 +10,15 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
    ```
    git clone https://github.com/Ransomwave/Rbx-Shortcut-Launcher.git
    ```
-2. Run the `CreateShortcut.bat` file
+2. Run the `CreateShortcut.bat` or the `src/rbx-shortcut-launcher-linux.sh` file
 3. Input the Game ID _(i.e. https://www.roblox.com/games/**NUMBERHERE**/Your-Game)_
 4. Save it to the desktop or any specified location
 5. Enjoy your new Roblox game shortcut with a custom icon, as if it were a real app!
 
 ## Requirements
 
-- Windows 10 or higher
-- PowerShell 5.1 or higher
+- Windows 10 or higher, or any respectable and recognized Linux distribution
+- PowerShell 5.1 or higher, or respectable version of Bash
 - Internet connection for downloading game icons
 
 ## Contributions
