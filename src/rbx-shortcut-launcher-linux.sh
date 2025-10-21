@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#HACK: Using global variables as function arguments is probably not a good idea
+
 # If the user has some custom very weird package manager, that's on them
 install_packages() {
   echo "Requesting sudo"
@@ -30,7 +32,7 @@ install_packages() {
 prompt_for_install_packages() {
   echo "No required packages found. Do you want to attempt to install those required packages?"
   read -p "Y/N >>>" prompt
-  if "${prompt,,}" == "y"; then
+  if [[ "${prompt,,}" == "y" ]]; then
     install_packages
   else
     exit 1
@@ -57,6 +59,7 @@ download_game() {
   ffmpeg -i temp.png -s 64x64 -hide_banner -loglevel error temp6.png
   ffmpeg -i temp.png -s 96x96 -hide_banner -loglevel error temp7.png
   ffmpeg -i temp.png -s 128x128 -hide_banner -loglevel error temp8.png
+  # 256x256 is the source image, doing ffmpeg on that is redundant
 
   echo "[3/3] Putting icons where they belong"
   echo "Requesting sudo access, because we might not be able to access the user icon folder"
@@ -87,7 +90,6 @@ get_game_info() {
 }
 
 create_desktop_file() {
-  echo "Is your desktop located at ~/Desktop/?"
   echo "Creating .desktop file in current directory..."
 
   cat >"./rbxgame.${gameID}.desktop" <<EOL
@@ -112,11 +114,53 @@ EOL
     echo "Desktop folder not found, shortcut stays at ${dir}"
   fi
 
-  echo "-- Operation Complete --"
-
+  echo "Shortcut created successfully"
 }
 
-# --- THE ACTUALLY IMPORTANT PART ---
+#--- THE ACTUALLY IMPORTANT PART ---
+
+create_shortcut() {
+  echo "Enter game ID (https://www.roblox.com/games/[[GAME ID]]/Children-Gambling-Online)"
+  read -p ">" gameID
+  get_game_info
+  download_game
+  create_desktop_file
+}
+
+update_all_shortcuts() {
+  local path="$HOME/Desktop"
+  while [[ true ]]; do
+
+    if ! test -d "$HOME/Desktop"; then
+      echo "No desktop folder found; Where are all the shortcuts located? (provide a file path)"
+      read -p ">" path
+      if ! test -d path; then
+        echo "Path does not exist, there's nothing to iterate through"
+      fi
+    fi
+
+    break
+  done
+
+  local list=($(echo "$path"/rbxgame*))
+
+  echo "Found shortcuts that can be updated: ${list[@]}"
+
+  echo "Starting the update"
+  for i in "${list[@]}"; do
+    echo "[UPD] Updating shortcut ${i}"
+    gameID=$(echo "$i" | sed 's/.desktop//' | sed 's/rbxgame.//')
+    gameID="${gameID##*/}"
+    get_game_info
+    download_game
+    rm "${i}"
+    create_desktop_file
+
+    echo ""
+    echo "Completed iteration ${i}, moving on to the next desktop icon"
+    echo ""
+  done
+}
 
 # any errors will cause the bash script to explode
 set -e
@@ -133,9 +177,16 @@ elif command -v jq &>/dev/null; then
 else
   prompt_for_install_packages
 fi
-echo "Reminder that this only works on desktop environments that SUPPORT .desktop files"
-echo "Enter game ID (https://www.roblox.com/games/[[GAME ID]]/Children-Gambling-Online)"
-read -p ">" gameID
-get_game_info
-download_game
-create_desktop_file
+
+echo "Do you want to:"
+echo "[1] Create a shortcut"
+echo "[2] Update all shortcuts"
+read -p ">" entry
+
+if [[ "$entry" == "1" ]]; then
+  create_shortcut
+elif [[ "$entry" == "2" ]]; then
+  update_all_shortcuts
+else
+  echo "Invalid entry"
+fi
