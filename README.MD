@@ -2,6 +2,8 @@
 
 Simple script that creates desktop shortcuts for Roblox games, as if they were real apps installed on your PC. It automatically fetches the **game's name** and **icon** for you!
 
+Supporting both Windows (using PowerShell) and Linux (using Bash)!
+
 ![Screenshot 1](./assets/screenshot1.png)
 
 ## How to use
@@ -31,11 +33,15 @@ Simple script that creates desktop shortcuts for Roblox games, as if they were r
 7. Enjoy your new Roblox game shortcut with a custom icon, as if it were a real app!
 
 ## Requirements
-
-- Windows 10 or higher, **OR** any respectable and recognized Linux distribution with no package manager deviations, and with a DE that supports `.desktop` files
-- PowerShell 5.1 or higher, **OR** respectable version of Bash, ffmpeg (image conversion), curl (web requests) and jq (json filtering)
-- Internet connection for downloading game icons
+### Windows
+- Windows 10 or higher
+- PowerShell 5.1 or higher
+### Linux
+- Distro with no package manager deviations, and with a Desktop Environment that supports `.desktop` files
+- Modern-ish version of Bash
+- FFmpeg (image conversion), 
+- curl (web requests) 
+- jq (json filtering)
 
 ## Contributions
-
 Feel free to fork the repository and submit pull requests for improvements or bug fixes.
